@@ -212,7 +212,7 @@ void snake (int &HP)
 		}
 		if (option==0) {printf ("\e[1;1H\e[2J"); openbag(snakeHP);}
 	}
-	if (snakeHP==0){
+	if (snakeHP<=0){
 		sleep(5); printf ("\e[1;1H\e[2J");
 		printf ("HP: %d\n", HP); sleep(1);
 		puts ("The snake dies and you get");
@@ -265,7 +265,7 @@ void thief (int &HP)
 		}
 		if (option==0) {printf ("\e[1;1H\e[2J"); openbag(thiefHP);}
 	}
-	if (thiefHP==0) {
+	if (thiefHP<=0) {
 		sleep(5); printf ("\e[1;1H\e[2J");
 		printf ("HP: %d\n", HP); sleep(1);
 		puts ("You knock down the thief but you can not kill people"); sleep(2);
@@ -289,7 +289,7 @@ void rat (int &HP)			//unfinish
 	int ratHP=18;
 	while (ratHP>0) {
 		printf ("HP: %d\t\t\tRat HP: %d\n", HP, ratHP); sleep(1);
-		printf ("0. Openbag\n1. Attack\nLet's '");
+		printf ("0. Openbag\n1. Attack\nLet's ");
 		int option; scanf ("%d", &option);
 		printf ("\e[1;1H\e[2J"); printf ("HP: %d\t\t\tRat HP: %d\n", HP, ratHP); sleep(1);
 		if (option==1) {
@@ -319,7 +319,7 @@ void rat (int &HP)			//unfinish
 		}
 		if (option==0) {printf ("\e[1;1H\e[2J"); openbag(ratHP);}
 	}
-	if (ratHP==0) {
+	if (ratHP<=0) {
 		printf ("HP: %d\n", HP); sleep(1);
 		puts ("You kill the rat"); sleep(2);
 		int temp=rand()%2+2;
