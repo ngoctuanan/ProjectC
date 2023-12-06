@@ -320,6 +320,7 @@ void rat (int &HP)
 		if (option==0) {printf ("\e[1;1H\e[2J"); openbag(ratHP);}
 	}
 	if (ratHP<=0) {
+		sleep(5); printf ("\e[1;1H\e[2J");
 		printf ("HP: %d\n", HP); sleep(1);
 		puts ("You kill the rat"); sleep(2);
 		int temp=rand()%2+2;
