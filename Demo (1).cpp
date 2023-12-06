@@ -284,7 +284,7 @@ void thief (int &HP)
 	}
 }
 
-void rat (int &HP)			//unfinish
+void rat (int &HP)
 {
 	int ratHP=18;
 	while (ratHP>0) {
@@ -340,6 +340,53 @@ void restblurwaterevent (int &eventcount)			//unfinish
 		printf ("0. Open bag\n1. Jump into the river\n2. Gather some material\nYou decide to ");
 		int option; scanf("%d", &option);
 		printf ("\e[1;1H\e[2J"); printf ("HP: %d\n", HP); sleep(1);
+		if (option==1) {
+			puts ("You wonder what is under that water"); sleep(2);
+			puts ("You jump into the river"); sleep(2);
+			int temp=rand()%10;
+			if (temp==0) {
+				puts ("A big shadow swimming around you"); sleep(2);
+				printf ("It disappears"); sleep(1); printf ("."); sleep(1); printf ("."); sleep(1); printf ("."); sleep(2); puts ("");
+				puts ("You swim to the land real quick but didn't make it"); sleep(2);
+				puts ("That thing bites your leg"); sleep(2);
+				int temp1=rand()%6+10;
+				printf ("-%d HP\n", temp1); sleep(2);
+				puts ("You try to kick it with the other leg"); sleep(2);
+				puts ("It falls off and you make it to the land");
+			} else if (temp<3) {
+				puts ("You dive down and look for some fishes"); sleep(2);
+				puts ("But you don't see see any"); sleep(2);
+				puts ("A snake bites you underwater"); sleep(2);
+				int temp1=rand()%3+3;
+				printf ("-%d HP\n", temp1); sleep(2);
+				puts ("You pull it and throw away"); sleep(2);
+				puts ("You swim to the land and it doesn't give up"); sleep(2);
+				puts ("The snake follows you"); sleep(5);
+				printf ("\e[1;1H\e[2J");
+				snake (HP);
+			} else {
+				puts ("With your special skill"); sleep(2);
+				printf ("You catch a ");
+				int temp1=rand()%10;
+				if (temp1<3) {
+					int temp2=rand()%3;
+					if (temp2==0) {puts ("smallmouth bass"); sleep(2);}
+					if (temp2==1) {puts ("perch"); sleep(2);}
+					if (temp2==2) {puts ("bream"); sleep(2);}
+					int temp3=rand()%4;
+					if (temp3==0) {puts ("But the fish is slippery"); sleep(2); puts ("It jumps off your hands and swims away");}
+						else {puts ("+1 small fish"); bag[1][2]++;}
+				} else {
+					int temp2=rand()%3;
+					if (temp2==0) {puts ("rainbow trout"); sleep(2);}
+					if (temp2==1) {puts ("walleye"); sleep(2);}
+					if (temp2==2) {puts ("pike"); sleep(2);}
+					int temp3=rand()%2;
+					if (temp3==0) {puts ("But the fish is slippery"); sleep(2); puts ("It jumps off your hands and swims away");}
+						else {puts ("+1 medium fish"); bag[1][3]++;}
+				}
+			}
+		}
 		if (option==2) {
 			puts ("You search for something useful to use"); sleep(2);
 			puts ("You push the high grasses aside"); sleep(2);
