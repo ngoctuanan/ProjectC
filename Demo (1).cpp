@@ -351,15 +351,15 @@ void restblurwaterevent (int &eventcount)			//unfinish
 				puts ("You swim to the land real quick but didn't make it"); sleep(2);
 				puts ("That thing bites your leg"); sleep(2);
 				int temp1=rand()%6+10;
-				printf ("-%d HP\n", temp1); sleep(2);
+				printf ("-%d HP\n", temp1); sleep(2); HP-=temp1; if (HP<=0) {sleep(2); HP=0; break;}
 				puts ("You try to kick it with the other leg"); sleep(2);
 				puts ("It falls off and you make it to the land");
 			} else if (temp<3) {
 				puts ("You dive down and look for some fishes"); sleep(2);
 				puts ("But you don't see see any"); sleep(2);
 				puts ("A snake bites you underwater"); sleep(2);
-				int temp1=rand()%3+3;
-				printf ("-%d HP\n", temp1); sleep(2);
+				int temp1=rand()%3+3; 
+				printf ("-%d HP\n", temp1); sleep(2); HP-=temp1; if (HP<=0) {sleep(2); HP=0; break;}
 				puts ("You pull it and throw away"); sleep(2);
 				puts ("You swim to the land and it doesn't give up"); sleep(2);
 				puts ("The snake follows you"); sleep(5);
