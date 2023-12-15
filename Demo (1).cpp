@@ -28,17 +28,15 @@ void food ()
 	while (keeppocketopen) {
 		printf ("HP: %d\t\t\tCoin: %d\n", HP, coin);
 		int count=0, *temp[]={0};
-		while (count>=0) {
 			if (bag[1][0]) {printf ("%d. %5s: %d          ", count, "Apple", bag[1][0]); temp[count]=&bag[1][0]; count++;}
 			if (bag[1][1]) {printf ("%d. %5s: %d          ", count, "Berry", bag[1][1]); temp[count]=&bag[1][1]; count++;}
 			if (bag[1][2]) {printf ("%d. %10s: %d     ", count, "Small fish", bag[1][2]); temp[count]=&bag[1][2]; count++;}
 			if (bag[1][3]) {printf ("%d. %11s: %d    ", count, "Medium fish", bag[1][3]); temp[count]=&bag[1][3]; count++;}
-			if (bag[1][4]) {printf ("%d. %10s: %d     ", count, "Large fish", bag[1][4]); temp[count]=&bag[1][4]; count++; if (count%5==0) puts("");}
-			if (bag[1][5]) {printf ("%d. %8s: %d     ", count, "Raw meat", bag[1][5]); temp[count]=&bag[1][5]; count++; if (count%5==0) puts("");}
-			if (bag[1][6]) {printf ("%d. %6s: %d         ", count, "Banana", bag[1][6]); temp[count]=&bag[1][6]; count++; if (count%5==0) puts("");}
-			if (bag[1][8]) {printf ("%d. %8s: %d       ", count, "Mushroom", bag[1][8]); temp[count]=&bag[1][8]; count++; if (count%5==0) puts("");}
-			break;
-		}
+			if (bag[1][4]) {printf ("%d. %10s: %d     ", count, "Large fish", bag[1][4]); temp[count]=&bag[1][4]; count++;}
+			if (bag[1][5]) {printf ("%d. %8s: %d     ", count, "Raw meat", bag[1][5]); temp[count]=&bag[1][5]; count++;} puts("");
+			if (bag[1][6]) {printf ("%d. %6s: %d         ", count, "Banana", bag[1][6]); temp[count]=&bag[1][6]; count++;}
+			if (bag[1][8]) {printf ("%d. %8s: %d       ", count, "Mushroom", bag[1][8]); temp[count]=&bag[1][8]; count++;}
+			if (bag[1][9]) {printf ("%d. %3s: %d            ", count, "Egg", bag[1][9]); temp[count]=&bag[1][9]; count++;}
 		printf("\n\n");
 		printf ("%d. Nothing\nYou want to consume ", count);
 		int option;
@@ -79,6 +77,17 @@ void food ()
 			int consume=rand()%4;
 			if (consume==0) {puts("You get poison from eating raw food"); sleep(2); puts("-7 HP"); sleep(2); printf ("\e[1;1H\e[2J"); HP-=7; if (HP<0) {HP=0; break;}}
 			else {puts("Raw meat does not suply much vitamins"); sleep(2); puts("+4 HP"); sleep(2); printf ("\e[1;1H\e[2J"); HP+=4; if (HP>100) HP=100;}
+		}
+		if (temp[option]==&bag[1][8]) {
+			bag[1][8]--;
+			int consume=rand()%4;
+			if (consume==0) {puts("A poisonous mushroom grow on the mushroom you ate"); sleep(2); puts("-7 HP"); sleep(2); printf ("\e[1;1H\e[2J"); HP-=7; if (HP<0) {HP=0; break;}}
+			else { consume=rand()%3+2; puts("Wild mushroom supply you some health"); sleep(2); printf("+%d HP", consume); sleep(2); printf ("\e[1;1H\e[2J"); HP+=consume; if (HP>100) HP=100;}
+		}
+		if (temp[option]==&bag[1][9]) {
+			bag[1][9]--;
+			puts ("You just ate an uncooked egg?"); sleep(2); puts ("So boid"); sleep(2); puts ("+4 HP"); sleep(2); HP+=4; printf ("\e[1;1H\e[2J");
+			if (HP>100) HP=100;
 		}
 		if (option==count) {
 			printf ("0. Confirm\n1. Ehh...\nClose pocket?\n");
@@ -338,6 +347,147 @@ void rat (int &HP)
 	}
 }
 
+void bat (int &HP)			
+{
+	int batHP=23;
+	while (batHP>0) {
+		printf ("HP: %d\t\t\tBat HP: %d\n", HP, batHP); sleep(1);
+		printf ("0. Openbag\n1. Attack\nLet's ");
+		int option; scanf ("%d", &option);
+		printf ("\e[1;1H\e[2J"); printf ("HP: %d\t\t\tBat HP: %d\n", HP, batHP); sleep(1);
+		if (option==1) {
+			int temp=rand()%20;
+			if (temp==0) puts ("You slash the bat but it flys up");
+				else {
+					temp=rand()%5+8;
+					printf ("You stab the bat with %d damage", temp); batHP-=temp;
+					if (batHP<=0) break;
+				}
+			sleep(5); printf ("\e[1;1H\e[2J"); printf ("HP: %d\t\t\tBat HP: %d\n", HP, batHP); sleep(1);
+			temp=rand()%20;
+			if (temp==0) puts ("The bat flys downward to you and open its mouth to bite but you block its mouth with your sword");
+				else {
+					temp=rand()%2+2;
+					puts ("The bat bites you"); sleep(2);
+					printf ("-%d HP\n", temp); HP-=temp; if (HP<=0) {sleep(2); HP=0; break;}
+				}
+			sleep(5); printf ("\e[1;1H\e[2J");
+		}
+		if (option==0) {printf ("\e[1;1H\e[2J"); openbag(batHP);}
+	}
+	if (batHP<=0) {
+		sleep(5); printf ("\e[1;1H\e[2J");
+		printf ("HP: %d\n", HP); sleep(1);
+		puts ("You kill the bat"); sleep(2);
+		int temp=rand()%2+2;
+		puts ("You got"); sleep(2); printf ("+%d coins\n", temp); sleep(2); coin+=temp;
+		puts ("An apple and a berry fall off the bat body"); sleep(2);
+		puts ("+1 apple"); bag[1][0]++;
+		puts ("+1 berry"); bag[1][1]++;
+		temp=rand()%10;
+		if (temp<4) {sleep(2); puts ("A bat hears its friend scream"); sleep(2); puts ("it comes to revenge"); sleep(5); printf ("\e[1;1H\e[2J"); bat(HP);}
+	}
+}
+
+void bear (int &HP)
+{
+	int bearHP=75;
+	while (bearHP>0) {
+		printf ("HP: %d\t\t\tBear HP: %d\n", HP, bearHP); sleep(1);
+		printf ("0. Openbag\n1. Attack\nLet's ");
+		int option; scanf ("%d", &option);
+		printf ("\e[1;1H\e[2J"); printf ("HP: %d\t\t\tBear HP: %d\n", HP, bearHP); sleep(1);
+		if (option==1) {
+			int temp=rand()%20;
+			if (temp==0) puts ("You stab the bear but it blocks your sword");
+				else {
+					temp=rand()%5+8;
+					printf ("You slash the bear with %d damage", temp); bearHP-=temp;
+					if (bearHP<=0) break;
+				}
+			sleep(5); printf ("\e[1;1H\e[2J"); printf ("HP: %d\t\t\tBear HP: %d\n", HP, bearHP); sleep(1);
+			temp=rand()%50;
+			if (temp<9) puts ("You dodge when the bear run toward you");
+				else {
+					temp=rand()%3+10;
+					puts ("The bear jumps up and lands behind you to bite"); sleep(2);
+					printf ("-%d HP\n", temp); HP-=temp; if (HP<=0) {sleep(2); HP=0; break;}
+					temp=rand()%5;
+					if (temp<2) {
+						sleep(2);
+						puts ("That was a deep bite"); sleep(2);
+						puts ("The wound starts bleeding"); sleep(2);
+						puts ("-5 HP"); HP-=5; if (HP<=0) {sleep(2); HP=0; break;}
+						temp=rand()%4;
+						if (temp<3) {sleep(2); puts ("It keeps bleeding"); sleep(2); puts ("-5 HP"); HP-=5; if (HP<=0) {sleep(2); HP=0; break;}}
+					}
+				}
+			sleep(5); printf ("\e[1;1H\e[2J");
+		}
+		if (option==0) {printf ("\e[1;1H\e[2J"); openbag(bearHP);}
+	}
+	if (bearHP<=0) {
+		sleep(5); printf ("\e[1;1H\e[2J");
+		printf ("HP: %d\n", HP); sleep(1);
+		puts ("You finally defeat that bear"); sleep(2);
+		int temp=rand()%3+13;
+		puts ("You got"); sleep(2); printf ("+%d coins\n", temp); sleep(2); coin+=temp;
+		temp=rand()%2+3;
+		puts ("You stab the bear dead body for its meat");
+		printf ("+%d raw meat", temp); bag[1][5]+=temp;
+	}
+}
+
+void wolf (int &HP)
+{
+	int wolfHP=55;
+	while (wolfHP>0) {
+		printf ("HP: %d\t\t\tWolf HP: %d\n", HP, wolfHP); sleep(1);
+		printf ("0. Openbag\n1. Attack\nLet's ");
+		int option; scanf ("%d", &option);
+		printf ("\e[1;1H\e[2J"); printf ("HP: %d\t\t\tWolf HP: %d\n", HP, wolfHP); sleep(1);
+		if (option==1) {
+			int temp=rand()%20;
+			if (temp==0) puts ("You stab the wolf but it jumps back");
+				else {
+					temp=rand()%5+8;
+					printf ("You kick the sword hilt and it stabs the wolf with %d damage\n", temp); wolfHP-=temp; sleep(2);
+					puts ("You avoid the wolf and take the sword back");
+					if (wolfHP<=0) break;
+				}
+			sleep(5); printf ("\e[1;1H\e[2J"); printf ("HP: %d\t\t\tWolf HP: %d\n", HP, wolfHP); sleep(1);
+			temp=rand()%25;
+			if (temp<2) puts ("The wolf bite you but you dodge and it bites the air surrounding you instead");
+				else {
+					temp=rand()%2+9;
+					puts ("The wolf damages you with its claws"); sleep(2);
+					printf ("-%d HP\n", temp); HP-=temp; if (HP<=0) {sleep(2); HP=0; break;}
+					temp=rand()%10;
+					if (temp==0) {
+						sleep(2);
+						puts ("That was a deep bite"); sleep(2);
+						puts ("The wound starts bleeding"); sleep(2);
+						puts ("-5 HP"); HP-=5; if (HP<=0) {sleep(2); HP=0; break;}
+						temp=rand()%4;
+						if (temp<3) {sleep(2); puts ("It keeps bleeding"); sleep(2); puts ("-5 HP"); HP-=5; if (HP<=0) {sleep(2); HP=0; break;}}
+					}
+				}
+			sleep(5); printf ("\e[1;1H\e[2J");
+		}
+		if (option==0) {printf ("\e[1;1H\e[2J"); openbag(wolfHP);}
+	}
+	if (wolfHP<=0) {
+		sleep(5); printf ("\e[1;1H\e[2J");
+		printf ("HP: %d\n", HP); sleep(1);
+		puts ("You defeat the wolf"); sleep(2);
+		puts ("That was..."); sleep(2);
+		int temp=rand()%2+9;
+		puts ("You got"); sleep(2); printf ("+%d coins\n", temp); sleep(2); coin+=temp;
+		puts ("You slash some meat from the wolf dead body"); sleep(2);
+		printf ("+2 raw meat", temp); bag[1][5]+=2;
+	}
+}
+
 void restblurwaterevent (int &eventcount)			//unfinish
 {
 	eventcount++;
@@ -566,16 +716,104 @@ void fishermanevent (int &eventcount)
 	}
 }
 
+void waterfall (int &eventcount)
+{
+	eventcount++;
+	while (int keepevent=true) {
+		printf ("HP: %d\n", HP); sleep(1);
+		puts ("You follow the river flow and see another branch of the river come from a waterfall nearby"); sleep(2);
+		puts ("You come toward the waterfall"); sleep(2);
+		puts ("There is a way lead to the cave behind the waterfall"); sleep(2);
+		printf ("0. Open bag\n1. Go inside the cave\n2. Explore around the waterfall\nYou decide to ");
+		int option; scanf("%d", &option);
+		printf ("\e[1;1H\e[2J"); printf ("HP: %d\n", HP); sleep(1);
+		if (option==1) {
+			puts ("You head inside the cave"); sleep(2);
+			puts ("You take a look"); sleep(2);
+			int temp=rand()%10;
+			if (temp<2) {
+				puts ("Seem mushroom is thriving inside the cave"); sleep(2);
+				puts ("You take some mushrooms and put them in your bag"); sleep(2);
+				int temp1=rand()%2+3; printf ("+%d mushrooms", temp1); bag[1][8]+=temp1;
+			} else {
+				puts ("This seems to be a bat cave"); sleep(2);
+				int temp1=rand()%10;
+				if (temp1<6) {
+					puts ("The cave is filled with fruits"); sleep(2);
+					puts ("But you don't see any bats"); sleep(2);
+					puts ("Maybe they are collecting more fruits outside"); sleep(2);
+					puts ("You collect these fruits"); sleep(2);
+					int temp2=rand()%2+4; printf ("+%d apples\n", temp2); bag[1][0]+=temp2;
+					puts ("+2 berries"); bag[1][1]+=2;
+				} else {
+					puts ("The bats are hanging to sleep"); sleep(2);
+					puts ("You see nothing to take and leave"); sleep(2);
+					puts ("You kick a rock accidentally and wake a bat up"); sleep(2);
+					puts ("It attacks you"); sleep(5);
+					printf ("\e[1;1H\e[2J");
+					bat(HP);
+				}
+			}
+		}
+		if (option==2) {
+			puts ("You go explore the habitat below the waterfall"); sleep(2);
+			int temp1=rand()%20;
+			if (temp1<2) {
+				puts ("You bend down to check the flow"); sleep(2);
+				puts ("Suddenly a bat flys out of the cave"); sleep(2);
+				puts ("It sees you and wants to take your bag"); sleep(2);
+				puts ("You cant let it have it"); sleep(5);
+				printf ("\e[1;1H\e[2J");
+				bat(HP);
+			} else if (temp1<5) {
+				puts ("You keep walking around and a fish falls on your head"); sleep(2);
+				puts ("-3 HP"); HP-=3; if (HP<=0) {sleep(2); HP=0; break;} sleep(2);
+				int temp2=rand()%10;
+				puts ("It must come from the upper waterfall"); sleep(2);
+				puts ("You just grab the fish and throw it into your bag anyway"); sleep(2);
+				if (temp2<7) {puts ("+1 small fish"); bag[1][2]++;}
+					else {puts ("+1 medium fish"); bag[1][3]++;}
+			} else if (temp1<9) {
+				puts ("Look at the water"); sleep(2);
+				puts ("You see the a bomb"); sleep(2);
+				puts ("Did someone catch fish by exploding?"); sleep(2);
+				puts ("You grab the bomb"); sleep(2);
+				int temp2=rand()%10;
+				if (temp2<4) {puts ("The bomb goes off"); sleep(2); puts ("-18 HP"); HP-=18; if (HP<=0) {sleep(2); HP=0; break;}}
+					else {puts ("The bomb may work well"); sleep(2); puts ("You put it in the bag"); sleep(2); puts("+1 bomb"); bag[3][2]++;}
+			} else {
+				puts ("You see an apple tree and come to examine"); sleep(2);
+				puts ("You shake the tree"); sleep(2);
+				int temp2=rand()%4;
+				if (temp2==0) {puts ("A bee hive falls on your head"); sleep(2); puts ("You get stung"); sleep(2); puts ("-8 HP"); HP-=8; if (HP<=0) {sleep(2); HP=0; break;}}
+					else if (temp2==1) {
+					puts ("A bat falls off"); sleep(2);
+					puts ("It is eatting and you do this to it?"); sleep(2);
+					puts ("It turns angry and attacks you"); sleep(5);
+					printf ("\e[1;1H\e[2J"); bat(HP);}
+					else {puts ("Some apples fall off"); sleep(2); puts ("You take them"); sleep(2); int temp3=rand()%3+2; printf ("+%d apples", temp3); bag[1][0]+=temp3;}
+			}
+		}
+		if (option==0) {printf ("\e[1;1H\e[2J"); int blockusegoods=0; openbag(blockusegoods);}
+		else {
+			sleep(5);
+			printf ("\e[1;1H\e[2J");
+			break;
+		}
+	}
+}
+
 void river (int &eventcount)
 {
 	int blockrepeat[3]={0}, locate=0;
 	while (eventcount<3) {
 		int temp=rand()%3+1;
-		if (blockrepeat[0]==temp||blockrepeat[1]==temp||blockrepeat[2]==temp) continue;
+		if (blockrepeat[0]==temp||blockrepeat[1]==temp||blockrepeat[2]==temp||blockrepeat[3]==temp) continue;
 		blockrepeat[locate]=temp; locate++;
 		if (temp==1) berrybushevent (eventcount);
 		if (temp==2) fishermanevent (eventcount);
 		if (temp==3) restblurwaterevent (eventcount);
+		if (temp==4) waterfall (eventcount);
 		if (HP==0) break;
 	}
 }
