@@ -312,7 +312,7 @@ void rat (int &HP)
 	int ratHP=18;
 	while (ratHP>0) {
 		printf ("HP: %d\t\t\tRat HP: %d\n", HP, ratHP); sleep(1);
-		printf ("0. Openbag\n1. Attack\nLet's ");
+		printf ("0. Open bag\n1. Attack\nLet's ");
 		int option; scanf ("%d", &option);
 		printf ("\e[1;1H\e[2J"); printf ("HP: %d\t\t\tRat HP: %d\n", HP, ratHP); sleep(1);
 		if (option==1) {
@@ -358,7 +358,7 @@ void bat (int &HP)
 	int batHP=23;
 	while (batHP>0) {
 		printf ("HP: %d\t\t\tBat HP: %d\n", HP, batHP); sleep(1);
-		printf ("0. Openbag\n1. Attack\nLet's ");
+		printf ("0. Open bag\n1. Attack\nLet's ");
 		int option; scanf ("%d", &option);
 		printf ("\e[1;1H\e[2J"); printf ("HP: %d\t\t\tBat HP: %d\n", HP, batHP); sleep(1);
 		if (option==1) {
@@ -400,7 +400,7 @@ void bear (int &HP)
 	int bearHP=75;
 	while (bearHP>0) {
 		printf ("HP: %d\t\t\tBear HP: %d\n", HP, bearHP); sleep(1);
-		printf ("0. Openbag\n1. Attack\nLet's ");
+		printf ("0. Open bag\n1. Attack\nLet's ");
 		int option; scanf ("%d", &option);
 		printf ("\e[1;1H\e[2J"); printf ("HP: %d\t\t\tBear HP: %d\n", HP, bearHP); sleep(1);
 		if (option==1) {
@@ -449,7 +449,7 @@ void wolf (int &HP)
 	int wolfHP=55;
 	while (wolfHP>0) {
 		printf ("HP: %d\t\t\tWolf HP: %d\n", HP, wolfHP); sleep(1);
-		printf ("0. Openbag\n1. Attack\nLet's ");
+		printf ("0. Open bag\n1. Attack\nLet's ");
 		int option; scanf ("%d", &option);
 		printf ("\e[1;1H\e[2J"); printf ("HP: %d\t\t\tWolf HP: %d\n", HP, wolfHP); sleep(1);
 		if (option==1) {
@@ -499,7 +499,7 @@ void monkey (int &HP)
 	int monkeyHP=40;
 	while (monkeyHP>0) {
 		printf ("HP: %d\t\t\tMonkey HP: %d\n", HP, monkeyHP); sleep(1);
-		printf ("0. Openbag\n1. Attack\nLet's ");
+		printf ("0. Open bag\n1. Attack\nLet's ");
 		int option; scanf ("%d", &option);
 		printf ("\e[1;1H\e[2J"); printf ("HP: %d\t\t\tMonkey HP: %d\n", HP, monkeyHP); sleep(1);
 		if (option==1) {
@@ -853,7 +853,7 @@ void waterfall (int &eventcount)
 					else {puts ("+1 medium fish"); bag[1][3]++;}
 			} else if (temp1<9) {
 				puts ("Look at the water"); sleep(2);
-				puts ("You see the a bomb"); sleep(2);
+				puts ("You see a bomb"); sleep(2);
 				puts ("Did someone catch fish by exploding?"); sleep(2);
 				puts ("You grab the bomb"); sleep(2);
 				int temp2=rand()%10;
