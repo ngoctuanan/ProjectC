@@ -2,8 +2,55 @@
 #include <stdlib.h>
 #include <time.h>
 #include <unistd.h>
-int HP, daycount, coin, bag[4][100]={0};
-
+int HP, daycount, coin, bag[4][100]={0}, dame = 0;
+void BuyWeapon(){
+	int choice;
+	do{
+	     puts("You have chosen to buy a weapon.\n");
+		 printf("Your coin: %d\n", coin);
+		 puts("1. LongSword: (15 coins to purchase, and it deals 5 damage.) \n"); sleep(2);
+		 puts("2. Bow: (10 coins to purchase, and it grants 4 damage.)\n"); sleep(2);
+		 puts("3. The dagger (20 coins to buy, deals 7 damage, and has an additional attack effect with a 15% chance.)\n"); sleep(2);
+		 puts("0. Nothing"); sleep(2);
+		 scanf("%d",&choice);
+		 printf ("\e[1;1H\e[2J");
+		 switch (choice){
+			case 1:
+			if(coin >= 15){
+				dame += 5;
+				coin -= 15; sleep(2);
+				printf("You have purchased a longsword, and it deals 5 damage. Your total damage is now: %d",  dame);
+			}else {
+				sleep(2); puts("I'm sorry, but you don't have enough money to complete the transaction.");
+			}
+			printf ("\e[1;1H\e[2J");
+			break;
+	        case 2:	 
+			if(coin >= 10){
+				dame += 4;
+				coin -= 10; sleep(2);
+				printf("You choose to buy a wooden bow. It deals 4 damage, and your current total damage is.%d", dame);
+			}else{
+				sleep(2); puts("I'm sorry, but you don't have enough money to complete the transaction.");
+			}
+			printf ("\e[1;1H\e[2J");
+			break;
+		    case 3:
+			if(coin >= 20){
+				dame += 7;
+				coin -= 20; sleep(2);
+				printf("You choose to buy the dagger. It deals 4 damage, and your current total damage is.%d", dame);
+				int temp;
+			}
+			printf ("\e[1;1H\e[2J");
+			break;
+		    case 0:
+			    break;
+			default:
+			      printf("Invalid option. Please try again.\n");
+		 }
+	     }while (choice != 0); 
+}
 void equipment ()
 {
 	while (bool keeppocketopen=true) {
@@ -1115,19 +1162,64 @@ void dangerforest (int &eventcount)
 		}
 	}
 }
+void Merchant(int &eventcount){
+	 eventcount++;
+     int choice;
+     while (true){
+	 printf ("HP: %d\n", HP); sleep(1);	
+	 puts("You see an old man standing under a tree");sleep(2);
+	 puts("You step forward and he calls out to you");sleep(2);
+	 puts("The old man is a merchant and he invites you to buy his goods");sleep(2);
+	 printf ("\e[1;1H\e[2J");	
+	 do{
+	 printf("Welcome to Merchain's shop!\n");sleep(1);
+	 puts("0. Open bag\n");sleep(1);
+	 puts("1. Buy Weapon\n");sleep(1);
+	 puts("2. Buy Equiment\n");sleep(1);
+	 puts("3. Exit\n");sleep(2);
+	 puts("Now! tell me your option boy");
+	 scanf("%d", &choice);
+	 printf ("\e[1;1H\e[2J");
+	 int demo;
+	 switch (choice)
+	 {
+	 case 0:
+	     puts("Let's go your bag\n");
+		 demo = 1;
+		 openbag(demo);
+		 break;	
+	 case 1: 
+	     BuyWeapon();
+		 break;
+	 case 2:
+	     puts("You have chosen to buy an item.\n");
+		 break;
+	 case 3:
+	     puts("Thank you for visiting shop!\n");
+		 printf ("\e[1;1H\e[2J");
+		 return;	 
+	 default:
+		 puts("Invalid option. Please choose again.\n");
+	 }
+	 printf ("\e[1;1H\e[2J");
+	 }
+	 while (choice != 3);
+    }
+}
 
 void river (int &eventcount)
 {
-	int blockrepeat[4]={0}, locate=0;
-	while (eventcount<5) {
-		int temp=rand()%5+1;
+	int blockrepeat[5]={0}, locate=0;
+	while (eventcount<6) {
+		int temp=rand()%7;
 		if (blockrepeat[0]==temp||blockrepeat[1]==temp||blockrepeat[2]==temp||blockrepeat[3]==temp) continue;
 		blockrepeat[locate]=temp; locate++;
-		if (temp==1) berrybushevent (eventcount);
-		if (temp==2) fishermanevent (eventcount);
-		if (temp==3) restblurwaterevent (eventcount);
-		if (temp==4) waterfall (eventcount);
-		if (temp==5) fruitbasket (eventcount);
+		if (temp==1) Merchant(eventcount);
+		if (temp==2) Merchant(eventcount);
+		if (temp==3) Merchant(eventcount);
+		if (temp==4) Merchant(eventcount);
+		if (temp==5) Merchant(eventcount);
+		if (temp==6) Merchant(eventcount);
 		if (HP==0) break;
 	}
 }
