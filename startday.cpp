@@ -19,13 +19,11 @@ void startday(int &eventcount) {
 
         if (option == 1) {
             river(eventcount);
-        } else if (option == 2) {
+        if (option == 2) {
             forest(eventcount);
-        } else if (option == 0) {
+        if (option == 0) {
             int blockusegoods = 0;
             openbag(blockusegoods);
-        } else {
-            break;
-        }
+        } else break;
     }
 }
