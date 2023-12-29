@@ -25,7 +25,7 @@ void process(int &HP) {
             coin = 0;
 
             for (int i = 0; i < 4; i++)
-                for (int j = 0; j < 10; j++)
+                for (int j = 0; j < 100; j++)
                     bag[i][j] = 0;
 
             bag[0][0] = 1;
